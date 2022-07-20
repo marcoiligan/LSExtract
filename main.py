@@ -516,9 +516,11 @@ while flag :
             repo = UserRepository()
             users_id = repo.get_all_users()
             users = []
+            privilege_groups = []
+            privilege_id = []
             flag2 = True
             while flag2:
-                choice = int(input("Welcome to User 1-Get User 2-Get All User 3-List All Users 4-Import Users to DB 5-Exit: "))
+                choice = int(input("Welcome to User 1-Get User 2-Get All User 3-Get All Privilege Groups 4-Import Users to DB 5-Exit: "))
                 match choice:
                     case 1:
                         user_id = int(input("User ID: "))
@@ -530,9 +532,22 @@ while flag :
                                 users.append(user)
                             print(len(users))
                     case 3:
-                        pass
+                        if users is not None:
+                            for user in users:
+                                if user.privilege_id not in privilege_id:
+                                    privilege_id.append(user.privilege_id)
+                                    privilege_groups.append(user.privilege_groups)
+                            print(len(privilege_groups))
+                        else:
+                            print("No Records Found!!!")
+
                     case 4:
-                        pass
+                        if users and privilege_groups is not None:
+                            repo.import_to_user_table(users,privilege_groups)
+                            users = []
+                            privilege_groups = []
+                        else:
+                            print("No Records Found!!!")
                     case 5:
                         flag2 = False
                     case unknown_command:

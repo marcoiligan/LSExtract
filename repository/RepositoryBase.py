@@ -262,3 +262,25 @@ class RepositoryBase:
         cur.execute(query_insert, val)
         self.con.commit()
         print("Inserted")
+
+    def insert_to_user_table(self, user):
+        query_insert = "INSERT INTO User(id,username,password,pin,email,account_locked,privilege,read_eula,hidden,enabled,phone,product,product_code,open_to_pos,gsx_apple_id,gsx_tech_id,can_open_from_otr,can_discount,internal_user,active,expired,display_welcome) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);"
+        val = (user.id,user.username,user.password,user.pin,user.email,user.account_locked,user.privilege_id,user.read_eula,user.hidden,user.enabled,user.phone,user.product,user.product_code,user.open_to_pos,user.gsx_apple_id,user.gsx_tech_id,user.can_open_from_otr,user.can_discount,user.internal_user,user.active,user.expired,user.display_welcome)
+        cur = self.con.cursor()
+        cur.execute(query_insert, val)
+        self.con.commit()
+        #Insert to User Name table
+        query_insert = "INSERT INTO User_Name(user_id, first, last) VALUES(%s,%s,%s);"
+        val = (user.id,user.name.first,user.name.last)
+        cur = self.con.cursor()
+        cur.execute(query_insert, val)
+        self.con.commit()
+        print("Inserted")
+
+    def insert_to_privilege_groups_table(self, privilege_group):
+        query_insert = "INSERT INTO Privilege_Groups(id, name, type) VALUES(%s,%s,%s);"
+        val = (privilege_group.id, privilege_group.name, privilege_group.type)
+        cur = self.con.cursor()
+        cur.execute(query_insert, val)
+        self.con.commit()
+        print("Inserted")
