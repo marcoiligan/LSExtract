@@ -29,3 +29,9 @@ class User:
         self.active = active
         self.expired = expired
         self.display_welcome = display_welcome
+
+    def set_name(self, name):
+        self.name = name
+
+    def set_privilege_group(self,privilege_group):
+        self.privilege_groups = privilege_group

@@ -2,13 +2,13 @@ from repository.CustomerRepository import CustomerRepository
 from repository.ProductRepository import ProductRepository
 from repository.InvoiceRepository import InvoiceRepository
 from repository.OrderRepository import OrderRepository
-
+from repository.UserRepository import UserRepository
 
 
 
 flag = True
 while flag :
-    choice = int(input("Choose from the Choices 1-Customer 2-Product 3-Invoices 4-Orders 5-Exit: "))
+    choice = int(input("Choose from the Choices 1-Customer 2-Product 3-Invoices 4-Orders 5-Users 6-Exit: "))
     match choice:
         case 1:
             repo = CustomerRepository()
@@ -513,6 +513,31 @@ while flag :
                     case unknown_command:
                         print("Error")
         case 5:
+            repo = UserRepository()
+            users_id = repo.get_all_users()
+            users = []
+            flag2 = True
+            while flag2:
+                choice = int(input("Welcome to User 1-Get User 2-Get All User 3-List All Users 4-Import Users to DB 5-Exit: "))
+                match choice:
+                    case 1:
+                        user_id = int(input("User ID: "))
+                        user = repo.get_user(user_id)
+                    case 2:
+                        if users_id is not None:
+                            for user_id in users_id:
+                                user = repo.get_user(int(user_id))
+                                users.append(user)
+                            print(len(users))
+                    case 3:
+                        pass
+                    case 4:
+                        pass
+                    case 5:
+                        flag2 = False
+                    case unknown_command:
+                        print("Error")
+        case 6:
             flag = False
         case unknown_command:
             print("Error")
